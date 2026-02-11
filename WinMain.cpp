@@ -1,9 +1,9 @@
-#include "MemoryTracker.h"
+#include "./code/MemoryTracker.h"
 #include <Windows.h>
 #include <thread>
 
 
-int WINAPI WinMain(_In_ HINSTANCE, _In_ HINSTANCE, _In_opt_ LPSTR, _In_ int) {
+int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 
 	// Fill the info we want to monitor.
 	const char* value1 = "You can manuelly stop it with member function Stop(), or it automatically destroys itself in destructor";
