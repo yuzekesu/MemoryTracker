@@ -126,7 +126,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="code\MemoryTracker.cpp" />
-    <ClCompile Include="WinMain.cpp" />
+    <ClCompile Include="main_demo.cpp" />
+    <ClCompile Include="WinMain_demo.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="code\MemoryTracker.h" />

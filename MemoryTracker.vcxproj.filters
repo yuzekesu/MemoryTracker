@@ -15,10 +15,13 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="WinMain.cpp">
+    <ClCompile Include="code\MemoryTracker.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="code\MemoryTracker.cpp">
+    <ClCompile Include="main_demo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="WinMain_demo.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
