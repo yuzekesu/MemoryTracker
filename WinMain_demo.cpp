@@ -18,19 +18,26 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 	// Re-open the terminal.
 	float value2 = 1.5f;
 	int value3 = 25;
-	char value4 = 'A';
-	char value5_buffer = 'A'; // 65
-	unsigned value5 = value5_buffer;
+	char value4 = 'A'; // 65
+	unsigned value5 = value4;
 	const char* value6 = "I'm Bob";
-	std::string value7 = "error";
+	std::string value7 = "error ";
+
 	Memory<float> mem2(value2, "float");
-	Memory<int> mem3(value3, "int");
+	Memory<int> mem3(value3, "int", " second");
 	Memory<char> mem4(value4, "char");
 	Memory<unsigned> mem5(value5, "char to unsigned");
 	Memory<const char*> mem6(value6, "const char*");
-	Memory<std::string> mem7(value7, "std::string");
+	Memory<std::string> mem7(value7, "std::string", ":code 9");
 	MemoryTracker t2(300, mem2, mem3, mem4, mem5, mem6, mem7);
-	std::this_thread::sleep_for(std::chrono::seconds(4));
+	for (int i = 0; i < 10; i++) {
+		value2 += 0.01;
+		value3++;
+		value4++;
+		value5 = value4;
+		value7 = value7 + value7;
+		Sleep(500);
+	}
 	return 0;
 }
 
