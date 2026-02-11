@@ -79,7 +79,9 @@ template<typename ...Memory_T>
 inline MemoryTracker::MemoryTracker(unsigned int interval_milli, Memory_T& ...Memories) {
 	(m_queue.push_back(&Memories), ...);
 	m_interval_milli = std::chrono::duration<unsigned int, std::milli>(interval_milli);
-	AllocConsole();
-	freopen_s(&m_new_output, "CONOUT$", "w", stdout);
+	if (GetConsoleWindow() == NULL) {
+		AllocConsole();
+		freopen_s(&m_new_output, "CONOUT$", "w", stdout);
+	}
 	m_thread = std::thread(&MemoryTracker::Update, this);
 }

@@ -11,8 +11,10 @@ void MemoryTracker::Stop() {
 	if (m_thread.joinable()) {
 		m_running = false;
 		m_thread.join();
-		fclose(m_new_output);
-		FreeConsole();
+		if (m_new_output != nullptr) {
+			fclose(m_new_output);
+			FreeConsole();
+		}
 	}
 }
 
