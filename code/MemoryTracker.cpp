@@ -1,6 +1,7 @@
 #include "MemoryTracker.h"
 #include <Windows.h>
 #include <iostream>
+#include <mutex>
 #include <thread>
 
 MemoryTracker::~MemoryTracker() {
@@ -18,11 +19,15 @@ void MemoryTracker::Stop() {
 	}
 }
 
+/// <summary>
+/// The multithreading part.
+/// </summary>
 void MemoryTracker::Update() {
 	while (m_running) {
+		std::lock_guard<std::mutex> lock(m_queue_mutex);
 		system("cls");
-		for (RawMemory* p_info : m_queue) {
-			std::cout << p_info->what();
+		for (std::unique_ptr<RawMemory>& p_memory : m_queue) {
+			std::cout << p_memory->what();
 		}
 		std::this_thread::sleep_for(m_interval_milli);
 	}
