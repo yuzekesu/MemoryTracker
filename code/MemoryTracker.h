@@ -26,11 +26,11 @@ template <typename T>
 class Memory : public RawMemory {
 public:
 	Memory() = delete;
-	Memory(T& ref, const char* description = "", const char* suffix = "");
+	Memory(const T& ref, const char* description = "", const char* suffix = "");
 	std::string what() override;
 private:
 	std::string m_description;
-	T* m_p_value;
+	const T* m_p_value;
 	std::string m_suffix;
 };
 
@@ -40,10 +40,10 @@ private:
 class MemoryTracker {
 public:
 	template <typename ...Memory_T>
-	MemoryTracker(unsigned int interval_milli, Memory_T& ...Memories);
+	MemoryTracker(unsigned int interval_milli, const Memory_T& ...Memories);
 	~MemoryTracker();
 	template <typename ...Memory_T>
-	void Add(Memory_T& ...Memories);
+	void Add(const Memory_T& ...Memories);
 	void Stop();
 private:
 	void Update();
@@ -63,7 +63,7 @@ private:
 /// Constructor of Memory. It defines how the memory will be displayed in the terminal.
 /// </summary>
 template<typename T>
-inline Memory<T>::Memory(T& ref, const char* description, const char* suffix) {
+inline Memory<T>::Memory(const T& ref, const char* description, const char* suffix) {
 	m_description = description;
 	m_p_value = &ref;
 	m_suffix = suffix;
@@ -90,7 +90,7 @@ inline std::string Memory<uint8_t>::what() {
 /// Constructor of MemoryTracker. It creates a terminal in a thread and updates the monitored memory in a certain interval. 
 /// </summary>
 template<typename ...Memory_T>
-inline MemoryTracker::MemoryTracker(unsigned int interval_milli, Memory_T& ...Memories) {
+inline MemoryTracker::MemoryTracker(unsigned int interval_milli, const Memory_T& ...Memories) {
 	(m_queue.push_back(std::make_unique<Memory_T>(Memories)), ...);
 	m_interval_milli = std::chrono::duration<unsigned int, std::milli>(interval_milli);
 	if (GetConsoleWindow() == NULL) {
@@ -101,7 +101,7 @@ inline MemoryTracker::MemoryTracker(unsigned int interval_milli, Memory_T& ...Me
 }
 
 template<typename ...Memory_T>
-inline void MemoryTracker::Add(Memory_T & ...Memories) {
+inline void MemoryTracker::Add(const Memory_T & ...Memories) {
 	std::lock_guard<std::mutex> lock(m_queue_mutex);
 	(m_queue.push_back(std::make_unique<Memory_T>(Memories)), ...);
 }
